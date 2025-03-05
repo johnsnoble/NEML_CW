@@ -1,4 +1,10 @@
 \documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{bm}
+
 \title{NEML CW}
 \author{Ben James, Johns Noble}
 \date{March 2025}
@@ -16,6 +22,21 @@ Once we have a notion of normal distribution on a manifold given some mean and c
 Finally, we will be able to use the fact that we can fit gaussians to data to be able to perform EM algorithms over data to fit a mixture of LANDS over data.
 TODO: Write something about how manifold learning is handled i.e. Do we know the manifold which data will be distributed on or is this something that needs to be learnt using graphs?
 \section{Constructing Metrics}
+In order to define the idea of distances over manifolds and in order to attempt to capture local behaviour of data, we need to a Riemannian Metric which acts on tangent vectors.
+The Metric $\textbf{M(x)}$ gives an inner product $\langle \textbf{u, M(x)v}\rangle$
+This allows us to define geodesics on our manifold as the path which minimises the length:
+$$\hat{\gamma} = \underset{\gamma}{argmin} \int_0^1\sqrt{\langle \gamma'(t),\textbf{M}(\gamma(t))
+\gamma'(t)\rangle}dt,\: \gamma(0)=\textbf{x},\:\gamma(1)=\textbf{y}$$
+Once we have $\hat{\gamma}$ it is natural to define our Exponential map given a $\textbf{v}\in T_\textbf{x}M$ such that $\textbf{y} =Exp_\textbf{x}(\textbf{v}) \in M$ where $\hat{\gamma}(t) = Exp_\textbf{x}(t\cdot\textbf{v})$.
+We can then begin to define the $Log$ mapping as: $Log_\textbf{x}(y)=v\in T_\textbf{x}M$.
+In order to calculate each geodesic, we must express solve the equation relating christofell symbols.
+This works out to be a second order differential ODE that in practice can be solved numerically.
+
+A generalised view of thinking about the normal distribution is the distribution over a given space such that given a known mean and covariance for which we have maximum entropy.
+This way of defining the normal distribution allows us to extend to non euclidean spaces.
+It can be shown that given a Log map, the distribution that satisfies this is as follows:
+$$p_M(\bm{x}|\bm{\mu},\bm{\Sigma}) = exp(-\frac{1}{2}\langle Log_{\bm{\mu}}(\bm{x}),
+\bm{\Sigma}^{-1}Log_{\bm{\mu}}(\bm{x})\rangle)$$
 \section{Parametric Inference}
 \section{Extending to Mixture Models}
 \end{document}
