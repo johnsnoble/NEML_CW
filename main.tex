@@ -21,6 +21,7 @@ The Locally Adaptive Normal Distribution (LAND) aims to attempt to do this.
 Once we have a notion of normal distribution on a manifold given some mean and covariance, We can try and fit distribution to the data using MLE approaches.
 Finally, we will be able to use the fact that we can fit gaussians to data to be able to perform EM algorithms over data to fit a mixture of LANDS over data.
 TODO: Write something about how manifold learning is handled i.e. Do we know the manifold which data will be distributed on or is this something that needs to be learnt using graphs?
+
 \section{Constructing Metrics}
 In order to define the idea of distances over manifolds and in order to attempt to capture local behaviour of data, we need to a Riemannian Metric which acts on tangent vectors.
 The Metric $\textbf{M(x)}$ gives an inner product $\langle \textbf{u, M(x)v}\rangle$
@@ -35,8 +36,27 @@ This works out to be a second order differential ODE that in practice can be sol
 A generalised view of thinking about the normal distribution is the distribution over a given space such that given a known mean and covariance for which we have maximum entropy.
 This way of defining the normal distribution allows us to extend to non euclidean spaces.
 It can be shown that given a Log map, the distribution that satisfies this is as follows:
+
 $$p_M(\bm{x}|\bm{\mu},\bm{\Sigma}) = exp(-\frac{1}{2}\langle Log_{\bm{\mu}}(\bm{x}),
 \bm{\Sigma}^{-1}Log_{\bm{\mu}}(\bm{x})\rangle)$$
+
+We also need to make considerations on how we can learn a metric tensor so that we can define a riemannian metric.
+The most obvious thing we can do is to use a single global metric tensor such that $dist^2(\bm{x}_i, \bm{x}_j = (\bm{x}_i-\bm{x}_j)^T\bm{M}(\bm{x}_i-\bm{x}_j)$ where $M$ is symetric and positive definite.
+The issue with this is that a single global metric is never enough to capture the non linearity of manifolds.
+We can attempt to also learn several metric tensors for different sections of data.
+This involves picking a few centres $(\bm{x_1}, \bm{x_2} ... \bm{x_r})$, defining a fixed metric $\bm{M}_r$ for each data point picking the closest metric.
+We can generalise this sort of approach by letting:
+$$\bm{M}(\bm{x}) = \Sigma_{r=1}^R\frac{w_r(\bm{x})}{\Sigma_jw_j(\bm{x})}$$
+Intuitively, we can thinkg of the ratio of $w_i$ to be the responsibility of each centre for $\bm{x}$.
+For example in the case of picking the nearest tensor, we can say that:
+$$w_r(x) = \begin{cases} 1,&\|\bm{x}-\bm{x}_r\|_{\bm{M}_r}^2 \leq \|\bm{x}-\bm{x}_j\|_{\bm{M}_j}^2, \forall j \\
+0,& otherwise\end{cases}$$
+We can experiment with using different $w$ functions and by using various number of centres.
+To summarise, a metric tensor is constructed using the inverse covariance of training data in a local space.
+The authors of LAND decided that when constructing metric tensors, that we should only consider the diagonals of the covariance to avoid issues with overfitting and to speed up computation.
+They also used for function $w_n(\bm{x}) = exp(-\frac{\|\bm{x}_n-\bm{x}\|_2^2}{2\sigma^2})$.
+Defining for the $d$ value in the diagonal of $\bm{M}$ to be $$\bm{M}(\bm{x}) = (\Sigma_{n=1}^Nw_n(\bm{x})(x_{nd}-x_d)^2+\rho)^{-1}$$
+The $\rho$ is here for numerical stability and $\sigma$ can be tweaked depending on the densitty and dimensions of the data.
 \section{Parametric Inference}
 \section{Extending to Mixture Models}
 \end{document}

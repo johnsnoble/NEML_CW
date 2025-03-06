@@ -1,4 +1,6 @@
 books
+venv
+.ipynb_checkpoints
 *.swp
 *.log
 *.aux
