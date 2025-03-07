@@ -66,5 +66,27 @@ $$\underset{\bm{\mu} \in M \bm{\Sigma} \in S_{++}^D}{\text{argmin}}(\phi(\bm{\mu
 =\frac{1}{2N}\Sigma_{n=1}^N\langle Log_{\bm{\mu}}(\bm{x}_n),
 \bm{\Sigma}^{-1}Log_{\bm{\mu}}(\bm{x}_n)\rangle
 + log(C(\bm{\mu},\bm{\Sigma}))$$
+Where $C$ here is the normalisation constant of normalisation to ensure its a probability distribution.
+To compute this value we require to be able to compute $E_{N(0,\bm{\Sigma})}[\sqrt{|\bm{M}Exp_{\bm{\mu}}(\bm{v})|}]$,
+intuitively can be thought of as the the expectation of the volume of the manifold.
+Since this is value is intractable we use monte carlo simulation techniques to be able to compute this by sampling over $N(0,\bm{\Sigma})$.
+We are able to work out two grad functions for the objective, one for the mean, one for the covariance.
+The grad function for the mean is in th form $-\bm{\Sigma}^{-1}(...)$.
+Simply applying gradient descent with this grad function however results in unstable convergence due to the condition number of $\bm{\Sigma}$.
+We end up chosing a direction which is independent from $\bm{\Sigma}$ by taking the direction to be $-\bm{\Sigma}\nabla\phi$ which can be proved to give a direction of objective function decrease.
+We also must be careful with applying gradient descent over the covariance matrix.
+This is because these covariance matrices must neccesarily be symmetric positive definit.
+In order to ensure that this always hold we can decompose $\bm{\Sigma} = PDP^T$ and therefore $\bm{\Sigma}^{-1} = PD^{-1}P^T= (PD^{-\frac{1}{2}})(PD^{-\frac{1}{2}})^T=A^TA$
+Representing the objectives with $\bm{A}$ allows us to optimise over $\bm{A}$ and ensure our covariance matricies are valid.
 \section{Extending to Mixture Models}
+\section{Conclusion}
+We were able to show that we could perform gradient descent in the space of parameters to find an approximation for the MLE of a normal distribution on a given manifold.
+We were also able given data points to learn a manifold and infer the geodesics to produce an exponential and log mapping by solving ODEs.
+
+Interesting cases we found were ones were cases where the variance of the distribution is high comparitive to the size of a spherical manifold.
+We found in these cases that generally convergence is slower and often inaccurate.
+This should make sense since we no longer have an injective exponential map and the tails of the normal distribution are able to "wrap" back around.
+This effect causes the overall distribution to look less like a normal distribution and more like a distribution with heavy tails.
+We found that setting the start variance to 0.7 was a good value.
+We can come up with these values by establishing bounds on the probability that a point appears over $\pi$ distance away in the tangent space.
 \end{document}
