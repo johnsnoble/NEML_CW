@@ -62,7 +62,7 @@ We were able to write an implementation that learnt a riemannian metric using th
 \section{Parametric Inference}
 We are tasked with finding the mean and covariance matrix of the distribution and we have implemented this using numerical methods.
 The objective function we are trying to maximise is as follows:
-$$\underset{\bm{\mu} \in M \bm{\Sigma} \in S_{++}^D}{\text{argmin}}(\phi(\bm{\mu}\bm{\Sigma})
+$$\underset{\bm{\mu} \in M \bm{\Sigma} \in S_{++}^D}{\text{argmin}}(\phi(\bm{\mu},\bm{\Sigma})
 =\frac{1}{2N}\Sigma_{n=1}^N\langle Log_{\bm{\mu}}(\bm{x}_n),
 \bm{\Sigma}^{-1}Log_{\bm{\mu}}(\bm{x}_n)\rangle
 + log(C(\bm{\mu},\bm{\Sigma}))$$
