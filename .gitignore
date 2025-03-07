@@ -5,3 +5,5 @@ venv
 *.log
 *.aux
 *.toc
+*.bbl
+*.blg

@@ -48,6 +48,8 @@ Intuitively, we can think of the ratio of $w_i$ to be the responsibility of each
 For example in the case of picking the nearest tensor, we can say that:
 $$w_r(x) = \begin{cases} 1,&\|\bm{x}-\bm{x}_r\|_{\bm{M}_r}^2 \leq \|\bm{x}-\bm{x}_j\|_{\bm{M}_j}^2, \forall j \\
 0,& \text{otherwise}\end{cases}$$
+There are many different ways we can construct the function $\bm{M}$ which gives a metric tensors at different points on the manifold.
+In hauberg et al.\cite{haubergGeometricTakeOnMetricLearning} they discuss many different philosophies and ideas for learning a metric tensor functions.
 To summarise, a metric tensor is constructed using the inverse covariance of training data in a local space.
 The authors of LAND decided that when constructing metric tensors, that we should only consider the diagonals of the covariance to avoid issues with overfitting and to speed up computation.
 They also used for function $w_n(\bm{x}) = exp(-\frac{\|\bm{x}_n-\bm{x}\|_2^2}{2\sigma^2})$.
