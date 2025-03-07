@@ -57,6 +57,14 @@ The authors of LAND decided that when constructing metric tensors, that we shoul
 They also used for function $w_n(\bm{x}) = exp(-\frac{\|\bm{x}_n-\bm{x}\|_2^2}{2\sigma^2})$.
 Defining for the $d$ value in the diagonal of $\bm{M}$ to be $$\bm{M}(\bm{x}) = (\Sigma_{n=1}^Nw_n(\bm{x})(x_{nd}-x_d)^2+\rho)^{-1}$$
 The $\rho$ is here for numerical stability and $\sigma$ can be tweaked depending on the densitty and dimensions of the data.
+In our experiments we begin by assuming that the data lies on a sphere so that we could use already existing Exponential and Log mappings and the metric tensor over a sphere.
+We were able to write an implementation that learnt a riemannian metric using the formula above.
 \section{Parametric Inference}
+We are tasked with finding the mean and covariance matrix of the distribution and we have implemented this using numerical methods.
+The objective function we are trying to maximise is as follows:
+$$\underset{\bm{\mu} \in M \bm{\Sigma} \in S_{++}^D}{\text{argmin}}(\phi(\bm{\mu}\bm{\Sigma})
+=\frac{1}{2N}\Sigma_{n=1}^N\langle Log_{\bm{\mu}}(\bm{x}_n),
+\bm{\Sigma}^{-1}Log_{\bm{\mu}}(\bm{x}_n)\rangle
++ log(C(\bm{\mu},\bm{\Sigma}))$$
 \section{Extending to Mixture Models}
 \end{document}
