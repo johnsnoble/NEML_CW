@@ -46,7 +46,7 @@ The issue with this is that a single global metric is never enough to capture th
 We can attempt to also learn several metric tensors for different sections of data.
 This involves picking a few centres $(\bm{x_1}, \bm{x_2} ... \bm{x_r})$, defining a fixed metric $\bm{M}_r$ for each data point picking the closest metric.
 We can generalise this sort of approach by letting:
-$$\bm{M}(\bm{x}) = \Sigma_{r=1}^R\frac{w_r(\bm{x})}{\Sigma_jw_j(\bm{x})}$$
+$$\bm{M}(\bm{x}) = \Sigma_{r=1}^R\frac{w_r(\bm{x})}{\Sigma_jw_j(\bm{x})}\bm{M}_r$$
 Intuitively, we can thinkg of the ratio of $w_i$ to be the responsibility of each centre for $\bm{x}$.
 For example in the case of picking the nearest tensor, we can say that:
 $$w_r(x) = \begin{cases} 1,&\|\bm{x}-\bm{x}_r\|_{\bm{M}_r}^2 \leq \|\bm{x}-\bm{x}_j\|_{\bm{M}_j}^2, \forall j \\
